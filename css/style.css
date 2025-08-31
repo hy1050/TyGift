@@ -1,0 +1,113 @@
+@import url('https://fonts.cdnfonts.com/css/mobile-font');
+
+:root {
+  --bg: #000;
+  --pink: #ff69b4;
+}
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: #cfe;
+  overflow: hidden;
+}
+body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+#matrix, #fireworks, #stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#fireworks, #stars {
+  pointer-events: none;
+  z-index: 9;
+}
+#countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--pink);
+  font-size: clamp(2rem, 8vw, 8rem);
+  font-family: 'Mobile Font', monospace;
+  text-align: center;
+  z-index: 10;
+  visibility: hidden;
+}
+#countdown.animate {
+  animation: countdownEffect 1s ease-in-out;
+}
+@keyframes countdownEffect {
+  0% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(0deg); }
+  100% { opacity: 0; transform: scale(0.5) rotate(15deg); }
+}
+#finalImage {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 15;
+  display: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+  font-family: 'Mobile Font', monospace;
+}
+#finalImage img {
+  max-height: 80vh;
+  width: auto;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,105,180,0.5);
+}
+#finalImage h1 {
+  color: var(--pink);
+  text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493;
+  animation: neonPulse 2s infinite alternate;
+  margin-top: 10px;
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+@keyframes neonPulse {
+  from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493; }
+  to { text-shadow: 0 0 2px #ff69b4, 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 40px #ff1493; }
+}
+#startBtn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: var(--pink);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Mobile Font', monospace;
+  box-shadow: 0 0 10px #ff69b4;
+}
+@media screen and (orientation: portrait) {
+  body::before {
+    content: "Vui lòng xoay ngang màn hình để xem hiệu ứng đầy đủ 🎉";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    z-index: 1000;
+    text-align: center;
+  }
+  #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn {
+    display: none !important;
+  }
+}
