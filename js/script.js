@@ -15,7 +15,7 @@ const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
 startBtn.addEventListener("click", () => {
   audio.play();
-  matrixRain("H A P P Y B I R T H D A Y");
+  matrixRain();
   startBtn.style.display = "none";
   setTimeout(() => {
     startSequence();
@@ -31,15 +31,6 @@ function showCountdownStep() {
     countdownEl.classList.remove("animate");
     void countdownEl.offsetWidth;
     countdownEl.classList.add("animate");
-    if (countdownValues[index] === "HAPPY") matrixRain("H A P P Y");
-    if (countdownValues[index] === "BIRTHDAY") matrixRain("B I R T H D A Y");
-    if (countdownValues[index] === "YOU") {
-      matrixRain("T O Y O U");
-      document.body.classList.add("shake");
-      setTimeout(() => {
-        document.body.classList.remove("shake");
-      }, 500);
-    }
     setTimeout(() => {
       countdownEl.style.visibility = "hidden";
       index++;
@@ -126,45 +117,35 @@ function showFinalImage() {
     final.style.opacity = 1;
   }, 50);
 }
-function matrixRain(chars) {
-  const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d');
-  let width, height, columns, drops, fontSize = 20;
-
-  function size() {
-    const dpr = Math.max(window.devicePixelRatio || 1, 1);
-    width = canvas.clientWidth;
-    height = canvas.clientHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    columns = Math.floor(width / fontSize);
-    drops = new Array(columns).fill(Math.floor(Math.random() * -50));
-    ctx.font = fontSize + "px ui-monospace, monospace";
-  }
-
-  function tick() {
-    ctx.fillStyle = `rgba(0,0,0,0.04)`;
+function matrixRain() {
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+  const columns = Math.floor(width / 20);
+  const drops = Array(columns).fill(0);
+  const chars = "01";
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, width, height);
-    for (let i = 0; i < columns; i++) {
-      const x = i * fontSize;
-      const y = drops[i] * fontSize;
-      const ch = chars.charAt(i % chars.length);
-      ctx.fillStyle = "#ff69b4";
-      ctx.shadowColor = "#ff69b4";
-      ctx.shadowBlur = 10;
-      ctx.fillText(ch, x, y);
-      ctx.shadowBlur = 0;
-      if (y > height && Math.random() > 0.975) {
-        drops[i] = Math.floor(Math.random() * -20);
-      } else {
-        drops[i] += 1;
+    ctx.fillStyle = "#0f0";
+    ctx.font = "20px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * 20, drops[i] * 20);
+      if (drops[i] * 20 > height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
+      drops[i]++;
     }
-    requestAnimationFrame(tick);
   }
-
-  size();
-  window.addEventListener('resize', size);
-  requestAnimationFrame(tick);
+  setInterval(drawMatrix, 50);
+  window.addEventListener("resize", () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
 }
