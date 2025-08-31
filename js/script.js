@@ -77,6 +77,7 @@ function startMatrixExplosion() {
     } else {
       startStarBackground();
       showFinalImage();
+      matrixRain();
     }
   }
   draw();
@@ -115,4 +116,36 @@ function showFinalImage() {
   setTimeout(() => {
     final.style.opacity = 1;
   }, 50);
+}
+function matrixRain() {
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+  const columns = Math.floor(width / 20);
+  const drops = Array(columns).fill(0);
+  const chars = "01";
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "#0f0";
+    ctx.font = "20px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * 20, drops[i] * 20);
+      if (drops[i] * 20 > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  setInterval(drawMatrix, 50);
+  window.addEventListener("resize", () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
 }
