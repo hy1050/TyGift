@@ -46,6 +46,24 @@ body {
   font-family: 'Mobile Font', monospace;
   text-align: center;
   z-index: 10;
+  visibility: hidden;
+}
+#countdown.animate {
+  animation: countdownEffect 1s ease-in-out;
+}
+@keyframes countdownEffect {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-15deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(15deg);
+  }
 }
 #finalImage {
   position: fixed;
@@ -66,9 +84,53 @@ body {
 }
 #finalImage h1 {
   color: var(--pink);
-  font-family: 'Mobile Font', monospace;
+  text-shadow:
+    0 0 5px #ff69b4,
+    0 0 10px #ff69b4,
+    0 0 20px #ff69b4,
+    0 0 40px #ff1493,
+    0 0 80px #ff1493;
+  animation: neonPulse 2s infinite alternate;
   margin-top: 10px;
   font-size: clamp(2rem, 5vw, 4rem);
+}
+@keyframes neonPulse {
+  from {
+    text-shadow:
+      0 0 5px #ff69b4,
+      0 0 10px #ff69b4,
+      0 0 20px #ff69b4,
+      0 0 40px #ff1493,
+      0 0 80px #ff1493;
+  }
+  to {
+    text-shadow:
+      0 0 2px #ff69b4,
+      0 0 5px #ff69b4,
+      0 0 10px #ff69b4,
+      0 0 20px #ff1493,
+      0 0 40px #ff1493;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  body::before {
+    content: "Vui lòng xoay ngang màn hình để xem hiệu ứng đầy đủ 🎉";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    z-index: 1000;
+    text-align: center;
+  }
+  #matrix, #fireworks, #stars, #countdown, #finalImage {
+    display: none !important;
+  }
 }
 </style>
 </head>
@@ -222,21 +284,29 @@ const countdownValues = [3, 2, 1, "HAPPY", "BIRTHDAY", "TO", "YOU"];
 let index = 0;
 const countdownEl = document.getElementById('countdown');
 
-countdownEl.style.visibility = "hidden";
+function showCountdownStep() {
+  if (index < countdownValues.length) {
+    countdownEl.textContent = countdownValues[index];
+    countdownEl.style.visibility = "visible";
+
+    countdownEl.classList.remove("animate");
+    void countdownEl.offsetWidth;
+    countdownEl.classList.add("animate");
+
+    setTimeout(() => {
+      countdownEl.style.visibility = "hidden";
+      index++;
+      setTimeout(showCountdownStep, 500);
+    }, 1000);
+  } else {
+    startMatrixExplosion();
+  }
+}
 
 setTimeout(() => {
-  countdownEl.style.visibility = "visible";
-  const timer = setInterval(() => {
-    if (index < countdownValues.length) {
-      countdownEl.textContent = countdownValues[index];
-      index++;
-    } else {
-      clearInterval(timer);
-      countdownEl.style.display = "none";
-      startMatrixExplosion();
-    }
-  }, 1000);
+  showCountdownStep();
 }, 3000);
 </script>
 </body>
 </html>
+````
