@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HAPPYBIRTHDAYBETY</title>
+  <style>
+     /* Nhúng font Matrix từ CDN */
+  @import url('https://fonts.cdnfonts.com/css/mobile-font');
+
+    :root {
+      --bg: #000;
+      --pink: #ff69b4;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: #cfe;
+      overflow: hidden;
+    }
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    #matrix {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+    }
+    #countdown {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff69b4;
+      font-size: clamp(2rem, 8vw, 8rem);
+      font-family: 'Mobile Font', monospace;
+      /* font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; */
+      text-align: center;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div id="countdown">3</div> <!-- Thêm phần tử này để hiển thị đếm ngược -->
+
+  <script>
+    /* ========== CONFIGURATION ========== */
+    const CONFIG = {
+      matrix: {
+        color: "#ff69b4",    // Red-pink color
+        fontSize: 20,        // Larger font size for slower effect
+        density: 1,          // Adjust density of characters
+        trailAlpha: 0.04     // Fade effect (lower = slower fade)
+      },
+      lines: ["H A P P Y B I R T H D A Y"] // Custom text
+    };
+
+    /* ========== MATRIX RAIN ========== */
+    (function matrixRain() {
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      const chars = CONFIG.lines[0]; // Use the custom text
+      let width, height, columns, drops, fontSize;
+
+      function size() {
+        const dpr = Math.max(window.devicePixelRatio || 1, 1);
+        width = canvas.clientWidth;
+        height = canvas.clientHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        fontSize = CONFIG.matrix.fontSize;
+        columns = Math.floor(width / fontSize * CONFIG.matrix.density);
+        drops = new Array(columns).fill(Math.floor(Math.random() * -50));
+        ctx.font = fontSize + "px ui-monospace, monospace";
+      }
+
+      function tick() {
+        ctx.fillStyle = `rgba(0,0,0,${CONFIG.matrix.trailAlpha})`;
+        ctx.fillRect(0, 0, width, height);
+        for (let i = 0; i < columns; i++) {
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+          const ch = chars.charAt(i % chars.length);
+          ctx.fillStyle = CONFIG.matrix.color;
+          ctx.shadowColor = CONFIG.matrix.color;
+          ctx.shadowBlur = 10;
+          ctx.fillText(ch, x, y);
+          ctx.shadowBlur = 0;
+          if (y > height && Math.random() > 0.975) {
+            drops[i] = Math.floor(Math.random() * -20);
+          } else {
+            drops[i] += 1; // Giảm tốc độ tăng (từ 1 xuống 0.2) để hiệu ứng chạy chậm hơn
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+
+      size();
+      window.addEventListener('resize', size);
+      requestAnimationFrame(tick);
+    })();
+
+    // Đếm ngược theo mảng
+const countdownValues = [3, 2, 1, "HAPPY", "BIRTHDAY", "TO", "YOU"];
+let index = 0;
+const countdownEl = document.getElementById('countdown');
+
+// Ẩn phần tử countdown trong 2 giây
+countdownEl.style.visibility = "hidden";
+
+// Chờ 2 giây trước khi bắt đầu đếm ngược
+setTimeout(() => {
+  countdownEl.style.visibility = "visible"; // Hiển thị phần tử countdown
+  const timer = setInterval(() => {
+    if (index < countdownValues.length) {
+      countdownEl.textContent = countdownValues[index];
+      index++;
+    } else {
+      clearInterval(timer); // Dừng đếm ngược khi hết mảng
+    }
+  }, 1000); // Hiển thị mỗi giá trị trong 1.2 giây
+}, 1500); // Chờ 2 giây trước khi bắt đầu
+  </script>
+</body>
+</html>
