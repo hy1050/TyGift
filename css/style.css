@@ -73,6 +73,7 @@ body {
   margin-top: 10px;
   font-size: clamp(2rem, 5vw, 4rem);
   text-align: right;
+  margin-right: 10px;
 }
 @keyframes neonPulse {
   from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493; }

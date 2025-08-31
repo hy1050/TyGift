@@ -15,6 +15,7 @@ const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
 startBtn.addEventListener("click", () => {
   audio.play();
+  matrixRain();
   startBtn.style.display = "none";
   setTimeout(() => {
     startSequence();
@@ -77,7 +78,6 @@ function startMatrixExplosion() {
     } else {
       startStarBackground();
       showFinalImage();
-      matrixRain();
     }
   }
   draw();
