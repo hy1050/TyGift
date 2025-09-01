@@ -11,13 +11,16 @@ html, body {
   background: var(--bg);
   color: #cfe;
   overflow: hidden;
-  font-family: 'Mobile Font', monospace;
+}
+body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 #matrix, #fireworks, #stars {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
+  display: block;
   z-index: 1;
 }
 #fireworks, #stars {
@@ -31,6 +34,7 @@ html, body {
   transform: translate(-50%, -50%);
   color: var(--pink);
   font-size: clamp(2rem, 8vw, 8rem);
+  font-family: 'Mobile Font', monospace;
   text-align: center;
   z-index: 10;
   visibility: hidden;
@@ -46,41 +50,43 @@ html, body {
 #finalImage {
   position: fixed;
   top: 10%;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
+  left: 5%;
+  transform: none;
+  text-align: left;
   z-index: 15;
+  display: none;
   opacity: 0;
   transition: opacity 2s ease;
-  display: none;
+  font-family: 'Mobile Font', monospace;
 }
 #finalImage img {
   max-height: 60vh;
   width: auto;
+  border: none;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255,105,180,0.5);
-  margin-right: 2rem;
 }
-.finalText {
+#finalImage .finalText {
   color: var(--pink);
   text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493;
   animation: neonPulse 2s infinite alternate;
+  margin-top: 10px;
   font-size: clamp(2rem, 5vw, 4rem);
-  margin: 0;
-  text-align: left;
+  text-align: right;
+  margin-right: 10px;
 }
 @keyframes neonPulse {
   from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493; }
-  to   { text-shadow: 0 0 2px #ff69b4, 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 40px #ff1493; }
+  to { text-shadow: 0 0 2px #ff69b4, 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 40px #ff1493; }
 }
-#startBtn, #replayBtn {
+#startBtn {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1001;
   padding: 1rem 2rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background: var(--pink);
   color: #000;
   border: none;
@@ -88,15 +94,6 @@ html, body {
   cursor: pointer;
   font-family: 'Mobile Font', monospace;
   box-shadow: 0 0 10px #ff69b4;
-}
-#startBtn {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-#replayBtn {
-  bottom: 5%;
-  right: 5%;
 }
 @media screen and (orientation: portrait) {
   body::before {
@@ -113,7 +110,7 @@ html, body {
     z-index: 1000;
     text-align: center;
   }
-  #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn, #replayBtn {
+  #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn {
     display: none !important;
   }
 }
