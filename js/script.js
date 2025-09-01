@@ -59,7 +59,7 @@ function startMatrixExplosion() {
   const particles = [];
   const centerX = width / 2;
   const centerY = height / 2;
-  const chars = "MATRIX";
+  const chars = "I LOVE U";
   for (let i = 0; i < 100; i++) {
     particles.push({
       x: centerX,
@@ -120,12 +120,16 @@ function startStarBackground() {
   drawStars();
 }
 function showFinalImage() {
-  const final = document.getElementById("finalImage");
-  final.style.display = "block";
+  const final = document.getElementById('finalImage');
+  final.style.display = 'flex';
   setTimeout(() => {
     final.style.opacity = 1;
+    document.getElementById("replayBtn").style.display = "block";
   }, 50);
 }
+document.getElementById("replayBtn").addEventListener("click", () => {
+  location.reload();
+});
 function matrixRain(chars) {
   const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');

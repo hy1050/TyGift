@@ -79,11 +79,9 @@ body {
   from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493; }
   to { text-shadow: 0 0 2px #ff69b4, 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 40px #ff1493; }
 }
-#startBtn {
+#startBtn, #replayBtn {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
   z-index: 1001;
   padding: 1rem 2rem;
   font-size: 1.5rem;
@@ -94,6 +92,15 @@ body {
   cursor: pointer;
   font-family: 'Mobile Font', monospace;
   box-shadow: 0 0 10px #ff69b4;
+}
+#startBtn {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#replayBtn {
+  bottom: 5%;
+  right: 5%;
 }
 @media screen and (orientation: portrait) {
   body::before {
@@ -110,7 +117,7 @@ body {
     z-index: 1000;
     text-align: center;
   }
-  #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn {
+  #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn, #replayBtn {
     display: none !important;
   }
 }
