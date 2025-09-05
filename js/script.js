@@ -1,6 +1,7 @@
 function startSequence() {
   showCountdownStep();
 }
+
 function checkOrientationAndShowButton() {
   if (window.matchMedia("(orientation: landscape)").matches) {
     document.getElementById("startBtn").style.display = "block";
@@ -11,25 +12,29 @@ function checkOrientationAndShowButton() {
 window.addEventListener("orientationchange", checkOrientationAndShowButton);
 window.addEventListener("resize", checkOrientationAndShowButton);
 checkOrientationAndShowButton();
+
 const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
+
 startBtn.addEventListener("click", () => {
   audio.play();
   startBtn.style.display = "none";
 
-  document.getElementById("finalImage").style.display = "none";
-  document.getElementById("finalImage").style.opacity = 0;
-  document.getElementById("finalText").style.display = "none";
-  document.getElementById("finalText").style.opacity = 0;
+  // Reset trạng thái Final Container
+  const finalContainer = document.getElementById("finalContainer");
+  finalContainer.style.display = "none";
+  finalContainer.style.opacity = 0;
 
   matrixRain("H A P P Y B I R T H D A Y");
   setTimeout(() => {
     startSequence();
   }, 3000);
 });
+
 const countdownValues = [3, 2, 1, "HAPPY", "BIRTHDAY", "TO", "YOU"];
 let index = 0;
 const countdownEl = document.getElementById("countdown");
+
 function showCountdownStep() {
   if (index < countdownValues.length) {
     countdownEl.textContent = countdownValues[index];
@@ -37,6 +42,7 @@ function showCountdownStep() {
     countdownEl.classList.remove("animate");
     void countdownEl.offsetWidth;
     countdownEl.classList.add("animate");
+
     if (countdownValues[index] === "HAPPY") matrixRain("H A P P Y");
     if (countdownValues[index] === "BIRTHDAY") matrixRain("B I R T H D A Y");
     if (countdownValues[index] === "YOU") {
@@ -46,6 +52,7 @@ function showCountdownStep() {
         document.body.classList.remove("shake");
       }, 500);
     }
+
     setTimeout(() => {
       countdownEl.style.visibility = "hidden";
       index++;
@@ -66,7 +73,6 @@ function showImageSequence(callback) {
   function showNext() {
     if (i < items.length) {
       const item = items[i];
-      const img = item.querySelector("img");
       const tag = item.querySelector(".hashtag");
 
       const randomX = Math.random() * 80;
@@ -99,10 +105,12 @@ function startMatrixExplosion() {
   let height = window.innerHeight;
   canvas.width = width;
   canvas.height = height;
+
   const particles = [];
   const centerX = width / 2;
   const centerY = height / 2;
   const chars = "I LOVE U";
+
   for (let i = 0; i < 100; i++) {
     particles.push({
       x: centerX,
@@ -113,9 +121,11 @@ function startMatrixExplosion() {
       alpha: 1
     });
   }
+
   function draw() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     particles.forEach((p, i) => {
       p.x += Math.cos(p.angle) * p.speed;
       p.y += Math.sin(p.angle) * p.speed;
@@ -125,6 +135,7 @@ function startMatrixExplosion() {
       ctx.fillText(p.char, p.x, p.y);
       if (p.alpha <= 0) particles.splice(i, 1);
     });
+
     if (particles.length > 0) {
       requestAnimationFrame(draw);
     } else {
@@ -132,9 +143,10 @@ function startMatrixExplosion() {
       showFinal();
     }
   }
+
   draw();
 
-  // Fallback: nếu vì lý do nào đó vòng lặp không kết thúc, vẫn gọi showFinal sau 5 giây
+  // Fallback: gọi showFinal sau 5 giây nếu vòng lặp chưa kết thúc
   setTimeout(() => {
     if (particles.length > 0) {
       startStarBackground();
@@ -150,12 +162,14 @@ function startStarBackground() {
   let height = window.innerHeight;
   canvas.width = width;
   canvas.height = height;
-  const stars = Array.from({length: 100}, () => ({
+
+  const stars = Array.from({ length: 100 }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
     radius: Math.random() * 2,
     alpha: Math.random()
   }));
+
   function drawStars() {
     ctx.clearRect(0, 0, width, height);
     stars.forEach(s => {
@@ -171,39 +185,27 @@ function startStarBackground() {
   }
   drawStars();
 }
+
 function showFinal() {
   const finalContainer = document.getElementById("finalContainer");
 
-  // Nếu muốn vẫn cảnh báo khi ở portrait nhưng không chặn hiển thị
+  // Cảnh báo nhưng không chặn
   if (!window.matchMedia("(orientation: landscape)").matches) {
     alert("Nên xoay ngang màn hình để xem đẹp hơn 🎉");
   }
 
-  // Hiển thị container
   finalContainer.style.display = "flex";
 
-  // Fade-in mượt
   setTimeout(() => {
     finalContainer.style.opacity = 1;
     document.getElementById("replayBtn").style.display = "block";
   }, 50);
 }
 
-
-
-function typeText(element, text, speed = 50) {
-  let i = 0;
-  element.innerHTML = '';
-  const interval = setInterval(() => {
-    element.innerHTML += text.charAt(i);
-    i++;
-    if (i >= text.length) clearInterval(interval);
-  }, speed);
-}
-
 document.getElementById("replayBtn").addEventListener("click", () => {
   location.reload();
 });
+
 function matrixRain(chars) {
   const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
