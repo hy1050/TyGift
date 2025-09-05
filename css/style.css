@@ -51,34 +51,31 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* đẩy nội dung về bên trái */
   gap: 2rem;
-  opacity: 0;
-  transition: opacity 1s ease;
-  /* position: relative; */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100; /* đảm bảo nằm trên canvas */
+  width: 100%;
+  max-width: 100%;
   padding: 2rem;
+}
+
+#finalImage {
+  flex: 0 0 auto; /* giữ nguyên kích thước ảnh */
 }
 
 #finalImage img {
   max-height: 80vh;
-  left: 10%;
   width: auto;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(105, 220, 255, 0.5);
 }
 
 #finalText {
+  flex: 1; /* chữ chiếm toàn bộ phần còn lại */
   max-width: 100%;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 60px;
+  text-align: left;
   color: #fff;
 }
+
 
 .finalHeader {
   font-size: clamp(1.5rem, 4vw, 3rem);
