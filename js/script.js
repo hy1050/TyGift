@@ -57,7 +57,7 @@ function showCountdownStep() {
       countdownEl.style.visibility = "hidden";
       index++;
       setTimeout(showCountdownStep, 500);
-    }, 1000);
+    }, 2000);
   } else {
     showImageSequence(() => {
       startMatrixExplosion();
@@ -191,7 +191,7 @@ function showFinal() {
 
   // Cảnh báo nhưng không chặn
   if (!window.matchMedia("(orientation: landscape)").matches) {
-    alert("Nên xoay ngang màn hình để xem đẹp hơn 🎉");
+    alert("Quý khách vui lòng xoay ngang màn hình và banh mắt ra để xem ạ!");
   }
 
   finalContainer.style.display = "flex";
