@@ -164,11 +164,14 @@ function startStarBackground() {
   drawStars();
 }
 function showFinal() {
-  if (!window.matchMedia("(orientation: landscape)").matches) return;
-
   const finalImage = document.getElementById("finalImage");
   const finalText = document.getElementById("finalText");
   const finalNote = document.querySelector(".finalNote");
+
+  if (!window.matchMedia("(orientation: landscape)").matches) {
+    alert("Vui lòng xoay ngang màn hình để xem lời chúc 🎉");
+    return;
+  }
 
   finalImage.style.display = "flex";
   finalText.style.display = "block";
@@ -180,6 +183,7 @@ function showFinal() {
     document.getElementById("replayBtn").style.display = "block";
   }, 50);
 }
+
 
 function typeText(element, text, speed = 50) {
   let i = 0;

@@ -176,7 +176,7 @@ body {
     text-align: center;
   }
   #matrix, #fireworks, #stars, #countdown, #finalImage, #finalText, #startBtn, #replayBtn {
-    display: none !important;
+    display: none;
   }
 }
 @keyframes shake {
