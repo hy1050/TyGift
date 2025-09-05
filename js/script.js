@@ -46,9 +46,46 @@ function showCountdownStep() {
       setTimeout(showCountdownStep, 500);
     }, 1000);
   } else {
-    startMatrixExplosion();
+    showImageSequence(() => {
+      startMatrixExplosion();
+    });
   }
 }
+
+function showImageSequence(callback) {
+  const items = document.querySelectorAll("#imageSequence .imageItem");
+  document.getElementById("imageSequence").style.display = "block";
+
+  let i = 0;
+  function showNext() {
+    if (i < items.length) {
+      const item = items[i];
+      const img = item.querySelector("img");
+      const tag = item.querySelector(".hashtag");
+
+      const randomX = Math.random() * 80;
+      const randomY = Math.random() * 60;
+      const side = Math.random() > 0.5 ? "left" : "right";
+
+      item.style.left = `${randomX}%`;
+      item.style.top = `${randomY}%`;
+      tag.style[side] = "5%";
+
+      item.classList.add("show");
+
+      setTimeout(() => {
+        item.classList.remove("show");
+        i++;
+        setTimeout(showNext, 2500);
+      }, 2500);
+    } else {
+      document.getElementById("imageSequence").style.display = "none";
+      callback();
+    }
+  }
+  showNext();
+}
+
 function startMatrixExplosion() {
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
@@ -84,6 +121,7 @@ function startMatrixExplosion() {
     });
     if (particles.length > 0) {
       requestAnimationFrame(draw);
+      showFinalImage();
     } else {
       startStarBackground();
       showFinalImage();
@@ -122,6 +160,7 @@ function startStarBackground() {
 function showFinalImage() {
   const final = document.getElementById('finalImage');
   final.style.display = 'flex';
+  // final.style.opacity = 1;
   setTimeout(() => {
     final.style.opacity = 1;
     document.getElementById("replayBtn").style.display = "block";
