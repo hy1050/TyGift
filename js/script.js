@@ -17,10 +17,10 @@ startBtn.addEventListener("click", () => {
   audio.play();
   startBtn.style.display = "none";
 
-  // ✅ Reset trạng thái final
-  const final = document.getElementById("finalImage");
-  final.style.display = "none";
-  final.style.opacity = 0;
+  document.getElementById("finalImage").style.display = "none";
+  document.getElementById("finalImage").style.opacity = 0;
+  document.getElementById("finalText").style.display = "none";
+  document.getElementById("finalText").style.opacity = 0;
 
   matrixRain("H A P P Y B I R T H D A Y");
   setTimeout(() => {
@@ -115,7 +115,7 @@ function startMatrixExplosion() {
   }
   function draw() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     particles.forEach((p, i) => {
       p.x += Math.cos(p.angle) * p.speed;
       p.y += Math.sin(p.angle) * p.speed;
@@ -127,14 +127,14 @@ function startMatrixExplosion() {
     });
     if (particles.length > 0) {
       requestAnimationFrame(draw);
-      // showFinalImage();
     } else {
       startStarBackground();
-      showFinalImage();
+      showFinal();
     }
   }
   draw();
 }
+
 function startStarBackground() {
   const canvas = document.getElementById("stars");
   const ctx = canvas.getContext("2d");
@@ -163,14 +163,34 @@ function startStarBackground() {
   }
   drawStars();
 }
-function showFinalImage() {
-  const final = document.getElementById('finalImage');
-  final.style.display = 'flex';
+function showFinal() {
+  if (!window.matchMedia("(orientation: landscape)").matches) return;
+
+  const finalImage = document.getElementById("finalImage");
+  const finalText = document.getElementById("finalText");
+  const finalNote = document.querySelector(".finalNote");
+
+  finalImage.style.display = "flex";
+  finalText.style.display = "block";
+
   setTimeout(() => {
-    final.style.opacity = 1;
+    finalImage.style.opacity = 1;
+    finalText.style.opacity = 1;
+    typeText(finalNote, finalNote.textContent, 40);
     document.getElementById("replayBtn").style.display = "block";
   }, 50);
 }
+
+function typeText(element, text, speed = 50) {
+  let i = 0;
+  element.innerHTML = '';
+  const interval = setInterval(() => {
+    element.innerHTML += text.charAt(i);
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, speed);
+}
+
 document.getElementById("replayBtn").addEventListener("click", () => {
   location.reload();
 });
@@ -192,6 +212,7 @@ function matrixRain(chars) {
   }
 
   function tick() {
+    ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = `rgba(0,0,0,0.04)`;
     ctx.fillRect(0, 0, width, height);
     for (let i = 0; i < columns; i++) {
