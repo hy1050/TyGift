@@ -121,7 +121,7 @@ function startMatrixExplosion() {
     });
     if (particles.length > 0) {
       requestAnimationFrame(draw);
-      showFinalImage();
+      // showFinalImage();
     } else {
       startStarBackground();
       showFinalImage();
