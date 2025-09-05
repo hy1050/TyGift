@@ -14,8 +14,9 @@ checkOrientationAndShowButton();
 const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
 startBtn.addEventListener("click", () => {
-  document.getElementById("finalImage").style.display = "none";
-  document.getElementById("finalImage").style.opacity = 0;
+  const final = document.getElementById("finalImage");
+  final.style.display = "none";
+  final.style.opacity = 0;
   audio.play();
   matrixRain("H A P P Y B I R T H D A Y");
   startBtn.style.display = "none";
