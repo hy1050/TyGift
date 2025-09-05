@@ -47,14 +47,17 @@ body {
   50% { opacity: 1; transform: scale(1.2) rotate(0deg); }
   100% { opacity: 0; transform: scale(0.5) rotate(15deg); }
 }
-#finalImage {
+#finalContainer {
   display: flex;
-  opacity: 0;
-  transition: opacity 1s ease;
-  width: 100%;
-  height: 60vh;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 1s ease;
+  position: relative;
+  z-index: 100; /* đảm bảo nằm trên canvas */
+  padding: 2rem;
 }
 
 #finalImage img {
@@ -65,19 +68,12 @@ body {
 }
 
 #finalText {
-  display: none;
-  opacity: 0;
-  transition: opacity 1s ease;
-  text-align: center;
-  font-size: 2rem;
-  font-family: 'Mobile Font', monospace;
+  max-width: 40%;
+  text-align: left;
   color: #fff;
-  margin-top: 2rem;
 }
 
 .finalHeader {
-  /* margin: 0;
-  text-align: center; */
   font-size: clamp(2rem, 5vw, 4rem);
   color: #ffffff;
   text-shadow:
@@ -86,7 +82,6 @@ body {
     0 0 20px #ffffff,
     0 0 40px #00ffff,
     0 0 80px #00ffff;
-  animation: neonPulseWhite 2s infinite alternate;
 }
 
 .finalNote {
@@ -97,7 +92,6 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   text-shadow: 0 0 5px #ffffff, 0 0 10px #00ffff;
-  font-family: 'Mobile Font', monospace;
 }
 
 @keyframes neonPulseWhite {
@@ -162,7 +156,7 @@ body {
 }
 @media screen and (orientation: portrait) {
   body::before {
-    content: "Vui lòng xoay ngang màn hình để xem hiệu ứng đầy đủ 🎉";
+    content: "Nên xoay ngang màn hình để xem hiệu ứng đầy đủ 🎉";
     position: fixed;
     top: 50%;
     left: 50%;
@@ -175,7 +169,14 @@ body {
     z-index: 1000;
     text-align: center;
   }
-  #matrix, #fireworks, #stars, #countdown, #finalImage, #finalText, #startBtn, #replayBtn {
+
+  /* Ẩn các hiệu ứng và nút, nhưng KHÔNG ẩn finalImage và finalText */
+  #matrix,
+  #fireworks,
+  #stars,
+  #countdown,
+  #startBtn,
+  #replayBtn {
     display: none;
   }
 }

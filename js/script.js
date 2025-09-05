@@ -133,6 +133,14 @@ function startMatrixExplosion() {
     }
   }
   draw();
+
+  // Fallback: nếu vì lý do nào đó vòng lặp không kết thúc, vẫn gọi showFinal sau 5 giây
+  setTimeout(() => {
+    if (particles.length > 0) {
+      startStarBackground();
+      showFinal();
+    }
+  }, 5000);
 }
 
 function startStarBackground() {
@@ -164,25 +172,23 @@ function startStarBackground() {
   drawStars();
 }
 function showFinal() {
-  const finalImage = document.getElementById("finalImage");
-  const finalText = document.getElementById("finalText");
-  const finalNote = document.querySelector(".finalNote");
+  const finalContainer = document.getElementById("finalContainer");
 
+  // Nếu muốn vẫn cảnh báo khi ở portrait nhưng không chặn hiển thị
   if (!window.matchMedia("(orientation: landscape)").matches) {
-    alert("Vui lòng xoay ngang màn hình để xem lời chúc 🎉");
-    return;
+    alert("Nên xoay ngang màn hình để xem đẹp hơn 🎉");
   }
 
-  finalImage.style.display = "flex";
-  finalText.style.display = "block";
+  // Hiển thị container
+  finalContainer.style.display = "flex";
 
+  // Fade-in mượt
   setTimeout(() => {
-    finalImage.style.opacity = 1;
-    finalText.style.opacity = 1;
-    typeText(finalNote, finalNote.textContent, 40);
+    finalContainer.style.opacity = 1;
     document.getElementById("replayBtn").style.display = "block";
   }, 50);
 }
+
 
 
 function typeText(element, text, speed = 50) {
