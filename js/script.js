@@ -14,12 +14,15 @@ checkOrientationAndShowButton();
 const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
 startBtn.addEventListener("click", () => {
+  audio.play();
+  startBtn.style.display = "none";
+
+  // ✅ Reset trạng thái final
   const final = document.getElementById("finalImage");
   final.style.display = "none";
   final.style.opacity = 0;
-  audio.play();
+
   matrixRain("H A P P Y B I R T H D A Y");
-  startBtn.style.display = "none";
   setTimeout(() => {
     startSequence();
   }, 3000);

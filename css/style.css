@@ -57,7 +57,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  flex-direction: row; /* thêm dòng này */
+  flex-direction: row;
+  display: flex; 
 }
 
 .finalLeft {
