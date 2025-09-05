@@ -43,10 +43,10 @@ function showCountdownStep() {
     void countdownEl.offsetWidth;
     countdownEl.classList.add("animate");
 
-    if (countdownValues[index] === "HAPPY") matrixRain("H A P P Y");
-    if (countdownValues[index] === "BIRTHDAY") matrixRain("B I R T H D A Y");
+    // if (countdownValues[index] === "HAPPY") matrixRain("H A P P Y");
+    // if (countdownValues[index] === "BIRTHDAY") matrixRain("B I R T H D A Y");
     if (countdownValues[index] === "YOU") {
-      matrixRain("T O Y O U");
+      // matrixRain("T O Y O U");
       document.body.classList.add("shake");
       setTimeout(() => {
         document.body.classList.remove("shake");
@@ -57,7 +57,7 @@ function showCountdownStep() {
       countdownEl.style.visibility = "hidden";
       index++;
       setTimeout(showCountdownStep, 500);
-    }, 2000);
+    }, 1000);
   } else {
     showImageSequence(() => {
       startMatrixExplosion();
