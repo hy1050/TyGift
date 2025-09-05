@@ -14,6 +14,8 @@ checkOrientationAndShowButton();
 const startBtn = document.getElementById("startBtn");
 const audio = document.querySelector("audio");
 startBtn.addEventListener("click", () => {
+  document.getElementById("finalImage").style.display = "none";
+  document.getElementById("finalImage").style.opacity = 0;
   audio.play();
   matrixRain("H A P P Y B I R T H D A Y");
   startBtn.style.display = "none";
@@ -160,7 +162,6 @@ function startStarBackground() {
 function showFinalImage() {
   const final = document.getElementById('finalImage');
   final.style.display = 'flex';
-  // final.style.opacity = 1;
   setTimeout(() => {
     final.style.opacity = 1;
     document.getElementById("replayBtn").style.display = "block";

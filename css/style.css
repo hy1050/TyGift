@@ -184,6 +184,9 @@ body {
     z-index: 1000;
     text-align: center;
   }
+  #finalImage {
+    display: none !important;
+  }
   #matrix, #fireworks, #stars, #countdown, #finalImage, #startBtn, #replayBtn {
     display: none !important;
   }
