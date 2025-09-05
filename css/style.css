@@ -55,20 +55,24 @@ body {
   gap: 2rem;
   opacity: 0;
   transition: opacity 1s ease;
-  position: relative;
+  /* position: relative; */
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  transform: translate(-40%, -40%);
   z-index: 100; /* đảm bảo nằm trên canvas */
   padding: 2rem;
 }
 
 #finalImage img {
-  max-height: 60vh;
+  max-height: 80vh;
   width: auto;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255,105,180,0.5);
 }
 
 #finalText {
-  max-width: 40%;
+  max-width: 80%;
   text-align: left;
   color: #fff;
 }
