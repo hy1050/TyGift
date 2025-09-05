@@ -158,8 +158,9 @@ body {
 }
 
 #replayBtn {
-  bottom: 5%;
+  top: 5%;
   right: 5%;
+  bottom: auto;
 }
 @media screen and (orientation: portrait) {
   body::before {
